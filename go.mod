@@ -89,3 +89,5 @@ require (
 )
 
 replace github.com/openstack-k8s-operators/openstack-operator/apis => ./apis
+
+replace github.com/openstack-k8s-operators/mariadb-operator/api => ../mariadb-operator/api

@@ -8,7 +8,7 @@ IMAGEREGISTRY=${IMAGEREGISTRY:-"quay.io"}
 cp custom-bundle.Dockerfile custom-bundle.Dockerfile.pinned
 
 #loop over each openstack-k8s-operators go.mod entry
-for MOD_PATH in $(go list -m -json all | jq -r '. | select(.Path | contains("openstack")) | .Replace // . |.Path' | grep -v apis | grep -v openstack-operator | grep -v lib-common); do
+for MOD_PATH in $(go list -m -json all | jq -r '. | select(.Path | contains("openstack")) | .Replace // . |.Path' | grep openstack-k8s-operators | grep -v apis | grep -v openstack-operator | grep -v lib-common); do
   MOD_VERSION=$(go list -m -json all | jq -r ". | select(.Path | contains(\"openstack\")) | .Replace // . | select( .Path == \"$MOD_PATH\") | .Version")
 
   BASE=$(echo $MOD_PATH | sed -e 's|github.com/.*/\(.*\)-operator/.*|\1|')

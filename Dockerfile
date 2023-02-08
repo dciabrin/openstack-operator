@@ -9,6 +9,10 @@ COPY go.sum go.sum
 # required in order to mod-download
 COPY apis/ apis/
 
+# temporary override for galera reconciler
+COPY mariadb-operator-api.tar mariadb-operator-api.tar
+RUN tar -C/ -xvf mariadb-operator-api.tar
+
 # cache deps before building and copying source so that we don't need to re-download as much
 # and so that source changes don't invalidate our downloaded layer
 RUN go mod download

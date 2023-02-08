@@ -8,6 +8,10 @@ COPY go.sum go.sum
 
 COPY apis/ apis/
 
+# temporary override for galera reconciler
+COPY mariadb-operator-api.tar mariadb-operator-api.tar
+RUN tar -C/ -xvf mariadb-operator-api.tar
+
 # cache deps before building and copying source so that we don't need to re-download as much
 # and so that source changes don't invalidate our downloaded layer
 RUN go mod download
@@ -23,7 +27,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o csv-merger csv-merger.g
 #ARG KEYSTONE_BUNDLE=quay.io/openstack-k8s-operators/keystone-operator-bundle:latest
 
 FROM quay.io/openstack-k8s-operators/keystone-operator-bundle:latest as keystone-bundle
-FROM quay.io/openstack-k8s-operators/mariadb-operator-bundle:latest as mariadb-bundle
+FROM quay.io/dciabrin/mariadb-operator-bundle:v0.0.1 as mariadb-bundle
 FROM quay.io/openstack-k8s-operators/rabbitmq-cluster-operator-bundle:latest as rabbitmq-bundle
 FROM quay.io/openstack-k8s-operators/placement-operator-bundle:latest as placement-bundle
 FROM quay.io/openstack-k8s-operators/glance-operator-bundle:latest as glance-bundle
