@@ -5053,6 +5053,8 @@ spec:
                         containerImage:
                           default: quay.io/tripleozedcentos9/openstack-mariadb:current-tripleo
                           type: string
+                        customServiceConfig:
+                          type: string
                         nodeSelector:
                           additionalProperties:
                             type: string
